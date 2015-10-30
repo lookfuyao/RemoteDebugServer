@@ -70,7 +70,7 @@ public class AdbProxy extends BThread {
 
             InputStream in = getSocketInputStream();
             int bytesRead = 0;
-            byte[] buffer = new byte[1024*8];
+            byte[] buffer = new byte[1024*3];
 
             try {
                 while ((bytesRead = in.read(buffer, 0, buffer.length)) != -1) {

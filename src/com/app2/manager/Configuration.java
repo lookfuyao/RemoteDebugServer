@@ -15,6 +15,7 @@ public class Configuration {
     public static final String CMD_RETRUN_LIST_DEVICES = CMD_RETURN_TAG + CMD_LIST_DEVICES;
     public static final String CMD_RETRUN_SET_DEVICE = CMD_RETURN_TAG + CMD_SET_DEVICE;
     public static final String CMD_RETRUN_GET_DEVICE = CMD_RETURN_TAG + CMD_GET_DEVICE;
+    public static final String CMD_RETRUN_CONNECT_ADB = CMD_RETURN_TAG + CMD_CONNECT_ADB;
 
     public static final String SEG = "#@#";
 
@@ -26,4 +27,7 @@ public class Configuration {
     
     public static final int TYPE_ALL = 0xFFFF;
 
+    public static final int FLAG_START_ADB_SUCCESS = 1;
+    public static final int FLAG_START_ADB_FAIL = 2;
+    
 }

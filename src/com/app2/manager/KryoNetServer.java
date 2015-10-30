@@ -156,6 +156,28 @@ public class KryoNetServer extends Thread {
 						msg.text = Configuration.CMD_RETRUN_GET_DEVICE
 								+ getDestDevice(connection);
 						mServer.sendToTCP(c.getID(), msg);
+					} else if (message
+							.startsWith(Configuration.CMD_RETRUN_CONNECT_ADB)) {
+						String result = message
+								.substring(Configuration.CMD_RETRUN_CONNECT_ADB
+										.length());
+						int ret = -1;
+						try {
+							ret = Integer.valueOf(result);
+						} catch (NumberFormatException e) {
+							ret = -1;
+						}
+						
+						if (null == result || -1 == ret) {
+							return;
+						}
+						if (ret == Configuration.FLAG_START_ADB_SUCCESS) {
+							connection.mSession.setAdbConnectedStatus(true);
+						} else if (ret == Configuration.FLAG_START_ADB_FAIL) {
+							connection.mSession.setAdbConnectedStatus(false);
+						} else {
+							LogExt.e(TAG, "msg proctol error " + message);
+						}
 					}
 					return;
 				}

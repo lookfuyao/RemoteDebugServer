@@ -128,7 +128,7 @@ public class ServerThread extends BThread {
 							
 							hostList.add(adbProxy);
 							adbProxy.run();
-							
+							tempC.mSession = session;
 							sessionList.add(session);
 							Log.d(TAG,
 									"sessionList size is " + sessionList.size());

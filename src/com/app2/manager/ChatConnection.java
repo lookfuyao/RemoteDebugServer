@@ -1,6 +1,7 @@
 package com.app2.manager;
 
 import com.app2.banana.Data;
+import com.app2.banana.Session;
 import com.esotericsoftware.kryonet.Connection;
 
 // This holds per connection state.
@@ -13,6 +14,8 @@ public class ChatConnection extends Connection {
     
     //for pc adb set mark dest device
     public String mDestDevice = null;
+    
+    public Session mSession = null;
     
     private ReceiveBufferExListener mReceiveBufferExListener = null;
 

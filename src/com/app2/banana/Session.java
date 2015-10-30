@@ -17,26 +17,34 @@ public class Session implements ReceiveBufferExListener {
     private BlockingQueue<Data> requestStreamQueue = null;
     private BlockingQueue<Data> responseStreamQueue = null;
 
-    private boolean mStop = false;
-    private Thread mRespnseThread = null;
+	private boolean mStop = false;
+	private Thread mRespnseThread = null;
 
-    public Session(AdbProxy host, Connection connection, BlockingQueue<Data> requestStreamQueue, BlockingQueue<Data> responseStreamQueue) {
-        this.host = host;
-        this.slave = connection;
-        this.requestStreamQueue = requestStreamQueue;
-        this.responseStreamQueue = responseStreamQueue;
-    }
+	public Session(AdbProxy host, Connection connection,
+			BlockingQueue<Data> requestStreamQueue,
+			BlockingQueue<Data> responseStreamQueue) {
+		this.host = host;
+		this.slave = connection;
+		this.requestStreamQueue = requestStreamQueue;
+		this.responseStreamQueue = responseStreamQueue;
+	}
 
-    public void start() {
-    	Log.d(TAG,"session start");
-        ((ChatConnection) slave).setBufferExListener(this);
-        mRespnseThread = new Thread(mSendRunnable, "response thread");
-        mRespnseThread.start();
-        ChatMessage cmd = new ChatMessage();
-        String pc_Ip = host.getSocket().getInetAddress().toString();
-        cmd.text = Configuration.CMD_CONNECT_ADB + pc_Ip;
-        ((ChatConnection) slave).sendTCP(cmd);
-    }
+	public void start() {
+		Log.d(TAG, "session start");
+		((ChatConnection) slave).setBufferExListener(this);
+		ChatMessage cmd = new ChatMessage();
+		String pc_Ip = host.getSocket().getInetAddress().toString();
+		cmd.text = Configuration.CMD_CONNECT_ADB + pc_Ip;
+		((ChatConnection) slave).sendTCP(cmd);
+	}
+
+	public void setAdbConnectedStatus(boolean connect) {
+		Log.d(TAG, "setAdbConnectedStatus connect = " + connect);
+		if (connect) {
+			mRespnseThread = new Thread(mSendRunnable, "response thread");
+			mRespnseThread.start();
+		}
+	}
 
     public void destory() {
         mStop = true;
